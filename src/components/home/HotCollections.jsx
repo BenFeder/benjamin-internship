@@ -4,39 +4,14 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "../../css/styles/style.css";
 
 // Custom arrow components
 const NextArrow = (props) => {
   const { onClick } = props;
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#fff",
-        borderRadius: "50%",
-        width: "40px",
-        height: "40px",
-        right: "-25px",
-        zIndex: 1,
-        cursor: "pointer",
-        position: "absolute",
-        top: "50%",
-        transform: "translateY(-50%)",
-        border: "1px solid #ddd",
-        textAlign: "center",
-      }}
-      onClick={onClick}
-    >
-      <i 
-        className="fa fa-chevron-right" 
-        style={{ 
-          color: "#555", 
-          fontSize: "14px",
-          margin: "0 auto",
-        }}
-      ></i>
+    <div className="hot-collections-arrow hot-collections-arrow-next" onClick={onClick}>
+      <i className="fa fa-chevron-right"></i>
     </div>
   );
 };
@@ -44,34 +19,8 @@ const NextArrow = (props) => {
 const PrevArrow = (props) => {
   const { onClick } = props;
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#fff",
-        borderRadius: "50%",
-        width: "40px",
-        height: "40px",
-        left: "-25px",
-        zIndex: 1,
-        cursor: "pointer",
-        position: "absolute",
-        top: "50%",
-        transform: "translateY(-50%)",
-        border: "1px solid #ddd",
-        textAlign: "center",
-      }}
-      onClick={onClick}
-    >
-      <i 
-        className="fa fa-chevron-left" 
-        style={{ 
-          color: "#555", 
-          fontSize: "14px",
-          margin: "0 auto",
-        }}
-      ></i>
+    <div className="hot-collections-arrow hot-collections-arrow-prev" onClick={onClick}>
+      <i className="fa fa-chevron-left"></i>
     </div>
   );
 };

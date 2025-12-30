@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import NftItem from "../UI/NftItem";
 
-const AuthorItems = ({ authorId, authorImage, nftCollection }) => {
+const AuthorItems = ({
+  authorId,
+  authorImage,
+  nftCollection,
+}) => {
   const [authorItems, setAuthorItems] = useState([]);
   const [countdowns, setCountdowns] = useState({});
   const [loading, setLoading] = useState(true);
@@ -72,23 +76,18 @@ const AuthorItems = ({ authorId, authorImage, nftCollection }) => {
     <div className="de_tab_content">
       <div className="tab-1">
         <div className="row">
-          {loading
-            ? new Array(8).fill(0).map((_, index) => (
-                <div
-                  className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                  key={index}
-                >
-                  <div>Loading...</div>
-                </div>
-              ))
-            : authorItems.map((item) => (
-                <div
-                  className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                  key={item.nftId}
-                >
-                  <NftItem item={item} countdown={countdowns[item.nftId]} />
-                </div>
-              ))}
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            authorItems.map((item) => (
+              <div
+                className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                key={item.nftId}
+              >
+                <NftItem item={item} countdown={countdowns[item.nftId]} />
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

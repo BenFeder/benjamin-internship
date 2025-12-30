@@ -68,21 +68,25 @@ const ItemDetails = () => {
                       {itemData.likes}
                     </div>
                   </div>
-                  <p>
-                    {itemData.description}
-                  </p>
+                  <p>{itemData.description}</p>
                   <div className="d-flex flex-row">
                     <div className="mr40">
                       <h6>Owner</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
                           <Link to={`/author/${itemData.ownerId}`}>
-                            <img className="lazy" src={itemData.ownerImage} alt="" />
+                            <img
+                              className="lazy"
+                              src={itemData.ownerImage}
+                              alt=""
+                            />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${itemData.ownerId}`}>{itemData.ownerName}</Link>
+                          <Link to={`/author/${itemData.ownerId}`}>
+                            {itemData.ownerName}
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -94,12 +98,18 @@ const ItemDetails = () => {
                       <div className="item_author">
                         <div className="author_list_pp">
                           <Link to={`/author/${itemData.creatorId}`}>
-                            <img className="lazy" src={itemData.creatorImage} alt="" />
+                            <img
+                              className="lazy"
+                              src={itemData.creatorImage}
+                              alt=""
+                            />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${itemData.creatorId}`}>{itemData.creatorName}</Link>
+                          <Link to={`/author/${itemData.creatorId}`}>
+                            {itemData.creatorName}
+                          </Link>
                         </div>
                       </div>
                     </div>

@@ -9,14 +9,16 @@ const ExploreItems = () => {
   const [visibleCount, setVisibleCount] = useState(8);
   const [countdowns, setCountdowns] = useState({});
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     const fetchExploreItems = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore"
-        );
+        const url = filter
+          ? `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter=${filter}`
+          : "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore";
+        const response = await axios.get(url);
         setExploreItems(response.data);
         setLoading(false);
       } catch (error) {
@@ -26,7 +28,7 @@ const ExploreItems = () => {
     };
 
     fetchExploreItems();
-  }, []);
+  }, [filter]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,10 +58,15 @@ const ExploreItems = () => {
     setVisibleCount((prevCount) => prevCount + 4);
   };
 
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+    setVisibleCount(8);
+  };
+
   return (
     <>
       <div>
-        <select id="filter-items" defaultValue="">
+        <select id="filter-items" value={filter} onChange={handleFilterChange}>
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
           <option value="price_high_to_low">Price, High to Low</option>

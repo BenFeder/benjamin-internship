@@ -111,7 +111,11 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems authorId={authorId} />
+                  <AuthorItems
+                    authorId={authorId}
+                    authorImage={authorData.authorImage}
+                    nftCollection={authorData.nftCollection}
+                  />
                 </div>
               </div>
             </div>

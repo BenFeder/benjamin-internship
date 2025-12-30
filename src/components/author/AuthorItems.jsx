@@ -3,30 +3,46 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import NftItem from "../UI/NftItem";
 
-const AuthorItems = ({ authorId }) => {
+const AuthorItems = ({ authorId, authorImage, nftCollection }) => {
   const [authorItems, setAuthorItems] = useState([]);
   const [countdowns, setCountdowns] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAuthorItems = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
-        );
-        setAuthorItems(response.data.nftCollection || []);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching author items:", error);
-        setLoading(false);
-      }
-    };
+    if (nftCollection) {
+      // Use passed nftCollection if available
+      const itemsWithAuthorImage = nftCollection.map((item) => ({
+        ...item,
+        authorImage: authorImage || item.authorImage,
+        authorId: authorId || item.authorId,
+      }));
+      setAuthorItems(itemsWithAuthorImage);
+      setLoading(false);
+    } else if (authorId) {
+      // Fallback to fetching if nftCollection not passed
+      const fetchAuthorItems = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
+          );
+          const items = response.data.nftCollection || [];
+          const itemsWithAuthorImage = items.map((item) => ({
+            ...item,
+            authorImage: response.data.authorImage || item.authorImage,
+            authorId: authorId || item.authorId,
+          }));
+          setAuthorItems(itemsWithAuthorImage);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching author items:", error);
+          setLoading(false);
+        }
+      };
 
-    if (authorId) {
       fetchAuthorItems();
     }
-  }, [authorId]);
+  }, [authorId, authorImage, nftCollection]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -58,12 +74,18 @@ const AuthorItems = ({ authorId }) => {
         <div className="row">
           {loading
             ? new Array(8).fill(0).map((_, index) => (
-                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+                <div
+                  className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                  key={index}
+                >
                   <div>Loading...</div>
                 </div>
               ))
             : authorItems.map((item) => (
-                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={item.nftId}>
+                <div
+                  className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                  key={item.nftId}
+                >
                   <NftItem item={item} countdown={countdowns[item.nftId]} />
                 </div>
               ))}
